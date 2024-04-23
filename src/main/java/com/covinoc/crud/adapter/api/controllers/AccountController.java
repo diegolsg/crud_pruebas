@@ -15,14 +15,14 @@ import java.util.List;
 public class AccountController {
     @Autowired
     private AccountService accountService;
-    @GetMapping("/all")
+    @GetMapping("public/all")
     public ResponseEntity<List<AccountDto>> getAll(){
         List<AccountDto> accountDtoList = new ArrayList<>();
         accountService.getAll().forEach(account -> accountDtoList.add(AccountDto.of(account)));
         return new ResponseEntity<>(accountDtoList,HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("public/{id}")
     public ResponseEntity<AccountDto> getAccount(@PathVariable("id") int accountId){
         return new ResponseEntity<>(AccountDto.of(accountService.getAccount(accountId)),HttpStatus.OK);
     }
@@ -32,7 +32,6 @@ public class AccountController {
     }
     @DeleteMapping("/delete/{id}")
     public boolean delete(@PathVariable("id") int accountId){
-
         return accountService.delete(accountId);
     }
 }

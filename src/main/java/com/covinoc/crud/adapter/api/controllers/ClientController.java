@@ -21,25 +21,26 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-    @GetMapping("/all")
+    @GetMapping("public/all")
    public ResponseEntity<List<ClientDto>> getAll() {
         List<ClientDto> clientDtoList = new ArrayList<>();
         clientService.getAll().forEach(client -> clientDtoList.add(ClientDto.of(client)));
         return new ResponseEntity<>(clientDtoList, HttpStatus.OK);
     }
-    @GetMapping("/{id}")
+    @GetMapping("public/{id}")
     public  ResponseEntity<ClientDto> getClient(@PathVariable("id") int idClient){
         return new ResponseEntity<>(ClientDto.of(clientService.getClient(idClient)),HttpStatus.OK);
     }
-    @PutMapping("/update")
+    @PutMapping("private/update")
     public ResponseEntity<ClientDto> update(@RequestBody ClientDto clientDto){
         return new ResponseEntity<>(ClientDto.of(clientService.update(clientDto.getClientDto())),HttpStatus.OK);
     }
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("private/delete/{id}")
     public boolean delete(@PathVariable("id") int idClient){
         return clientService.delete(idClient);
     }
-    @PostMapping("/save")
+
+    @PostMapping("private/save")
     public ClientDto save(@Valid @RequestBody ClientDto clientDto){
         return ClientDto.of(clientService.save(clientDto.getClientDto()));
     }

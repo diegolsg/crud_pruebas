@@ -9,6 +9,8 @@ import java.time.temporal.ChronoUnit;
 
 @Service
 public class ClientValidationImp implements Validation<Client> {
+    private final double DAYS_YEAR = 365.25;
+    private final int ADULT =18;
     @Override
     public void validation(Client model) {
         if(model !=null){
@@ -23,7 +25,7 @@ public class ClientValidationImp implements Validation<Client> {
     }
     public void validateAge(LocalDate dateAge)throws Exception{
         long diffDay = ChronoUnit.DAYS.between(dateAge,LocalDate.now());
-        if ((diffDay/365.25)<=18){
+        if ((diffDay/DAYS_YEAR)<=ADULT){
             throw new Exception("error age");
         }
     }
